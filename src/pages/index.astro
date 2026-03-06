@@ -1,17 +1,100 @@
 ---
+import Layout from '../layouts/Layout.astro';
 
+const runtime = Astro.locals.runtime;
+let prices = { wegiel: "0", pellet: "0", zlom: "0" };
+
+try {
+  if (runtime?.env?.PRICES_KV) {
+    const data = await runtime.env.PRICES_KV.get('current_prices');
+    if (data) prices = JSON.parse(data);
+  }
+} catch (e) {
+  console.error("Błąd bazy KV:", e);
+}
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="PHU ALBERTO | Skład Opału, Złom, Kruszywa">
+	<main class="relative min-h-screen p-4 md:p-10 max-w-7xl mx-auto overflow-hidden">
+		
+		<div class="fixed inset-0 -z-10">
+			<div class="absolute top-0 left-1/4 w-96 h-96 bg-[#FF8C00]/10 blur-[120px] rounded-full"></div>
+			<div class="absolute bottom-0 right-1/4 w-96 h-96 bg-[#FFD700]/5 blur-[120px] rounded-full"></div>
+		</div>
+
+		<header class="text-center py-16 md:py-24" data-aos="zoom-out">
+			<h1 class="text-6xl md:text-8xl font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-gray-500">
+				PHU <span class="text-[#FF8C00]">ALBERTO</span>
+			</h1>
+			<p class="mt-4 text-gray-400 uppercase tracking-[0.6em] text-xs md:text-sm font-bold">
+				Energia • Recykling • Kruszywa
+			</p>
+		</header>
+
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+			
+			<div class="md:col-span-2 bg-white/[0.03] border border-white/10 p-10 rounded-[3rem] backdrop-blur-3xl relative overflow-hidden group" data-aos="fade-right">
+				<div class="relative z-10 flex justify-between">
+					<div>
+						<h2 class="text-[#FF8C00] text-3xl font-black italic uppercase tracking-tight">Skład Opału</h2>
+						<p class="text-gray-400 mt-1 font-medium text-sm">Orzech, Kostka, Ekogroszek</p>
+					</div>
+					<div class="text-5xl group-hover:scale-110 transition-transform">🔥</div>
+				</div>
+				<div class="mt-20 relative z-10">
+					<div class="text-7xl md:text-8xl font-black text-[#FFD700] tracking-tighter drop-shadow-2xl">
+						{prices.wegiel}<span class="text-2xl text-gray-500 ml-2 italic uppercase">zł/t</span>
+					</div>
+				</div>
+				<a href="tel:725937718" class="mt-10 relative z-10 block text-center bg-[#FF8C00] text-black font-extrabold py-5 rounded-2xl hover:bg-white transition-all active:scale-95 text-lg">
+					ZAMÓW TRANSPORT
+				</a>
+				<div class="absolute -bottom-20 -right-20 w-64 h-64 bg-[#FF8C00]/20 blur-[100px] rounded-full"></div>
+			</div>
+
+			<div class="bg-white/[0.03] border border-white/10 p-10 rounded-[3rem] backdrop-blur-3xl flex flex-col justify-between" data-aos="fade-left">
+				<h3 class="text-xl font-black text-gray-300 uppercase tracking-widest italic">Pellet A1</h3>
+				<div class="my-10">
+					<div class="text-5xl font-black text-white">{prices.pellet} zł</div>
+					<div class="text-[#FF8C00] font-bold text-xs mt-2 uppercase tracking-tighter">Worek 15kg / BigBag</div>
+				</div>
+				<div class="text-7xl self-end opacity-20">🌲</div>
+			</div>
+
+			<div class="bg-white/[0.03] border border-white/10 p-10 rounded-[3rem] backdrop-blur-3xl group hover:border-[#FFD700]/50 transition-all" data-aos="fade-up">
+				<div class="text-4xl mb-6">⚖️</div>
+				<h3 class="text-3xl font-black italic uppercase leading-none">Skup<br/>Złomu</h3>
+				<div class="mt-8 text-4xl font-mono text-[#FFD700] font-black tracking-tighter">{prices.zlom} <span class="text-sm text-gray-500 italic uppercase">zł/kg</span></div>
+			</div>
+
+			<div class="md:col-span-2 bg-gradient-to-br from-white/5 to-transparent border border-white/10 p-10 rounded-[3rem] relative overflow-hidden flex items-center" data-aos="fade-up" data-aos-delay="100">
+				<div class="relative z-10">
+					<h3 class="text-3xl font-black italic text-white uppercase tracking-tighter leading-none">Kruszywa &<br/>Transport</h3>
+					<p class="text-gray-400 mt-4 max-w-sm text-sm font-medium">Piasek, żwir, kliniec. Posiadamy własną flotę wywrotek. Szybka dostawa na telefon.</p>
+				</div>
+				<div class="absolute -right-10 opacity-10 text-[10rem] rotate-12">🚚</div>
+			</div>
+
+		</div>
+
+		<footer class="mt-20 py-10 border-t border-white/5 text-center" data-aos="fade-up">
+			<div class="flex flex-wrap justify-center gap-8 text-sm font-bold text-gray-400 uppercase tracking-widest">
+				<span>📍 Łaziska 62</span>
+				<a href="tel:725937718" class="text-[#FF8C00]">📞 725 937 718</a>
+				<span>🕒 Pn-Pt 7:00-16:00</span>
+			</div>
+			<p class="mt-10 text-[10px] text-gray-600 uppercase tracking-[0.5em]">© 2026 PHU ALBERTO Albert Szymkiewicz</p>
+		</footer>
+
+	</main>
+</Layout>
+
+<script>
+	import AOS from 'aos';
+	// Inicjalizacja animacji
+	AOS.init({
+		duration: 1000,
+		once: true,
+		offset: 100
+	});
+</script>
