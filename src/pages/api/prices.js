@@ -1,17 +1,26 @@
-export const POST = async ({ request, locals }) => {
-    // 1. Wyciągamy bazę z locals (standard dla Astro + Cloudflare Pages)
-    const env = locals.runtime.env;
-    const kv = env.PRICES_KV;
-    
-    const body = await request.json();
-    const pin = request.headers.get('Authorization');
+export const POST = async ({ request, locals, runtime }) => {
+    // Próbujemy wyciągnąć bazę z 3 różnych miejsc (zależnie od wersji Astro/Adaptera)
+    const kv = 
+        (locals?.runtime?.env?.PRICES_KV) || 
+        (runtime?.env?.PRICES_KV) || 
+        (request?.env?.PRICES_KV);
 
-    // 2. Sprawdzenie PINu
+    const pin = request.headers.get('Authorization');
+    const body = await request.json();
+
+    // 1. Sprawdzenie PINu (Zawsze najpierw!)
     if (pin !== "1234") {
-        return new Response(JSON.stringify({ error: "Zły PIN" }), { status: 401 });
+        return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
     }
 
-    // 3. Zapis do bazy
+    // 2. Sprawdzenie czy baza w ogóle istnieje w systemie
+    if (!kv) {
+        return new Response(JSON.stringify({ 
+            error: "Błąd konfiguracji: Serwer nie widzi bazy PRICES_KV. Sprawdź Bindings w panelu Cloudflare!" 
+        }), { status: 500 });
+    }
+
+    // 3. Próba zapisu
     try {
         await kv.put('current_prices', JSON.stringify(body));
         return new Response(JSON.stringify({ success: true }), { 
@@ -19,7 +28,6 @@ export const POST = async ({ request, locals }) => {
             headers: { 'Content-Type': 'application/json' }
         });
     } catch (err) {
-        // Jeśli tu wejdzie, to znaczy że Binding PRICES_KV nie działa
-        return new Response(JSON.stringify({ error: "Błąd bazy: " + err.message }), { status: 500 });
+        return new Response(JSON.stringify({ error: "Błąd KV: " + err.message }), { status: 500 });
     }
 };
