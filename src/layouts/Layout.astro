@@ -1,7 +1,7 @@
 ---
 interface Props { title: string; }
 const { title } = Astro.props;
-import '../styles/global.css'; // Ścieżka do Twojego pliku CSS
+import '../styles/global.css';
 ---
 <!doctype html>
 <html lang="pl">
@@ -11,22 +11,32 @@ import '../styles/global.css'; // Ścieżka do Twojego pliku CSS
 		<title>{title}</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Archivo+Black&display=swap" rel="stylesheet">
 	</head>
 	<body class="bg-[#050505] text-white selection:bg-[#FF8C00] selection:text-black antialiased">
+		<nav class="fixed top-0 w-full z-50 bg-black/50 backdrop-blur-xl border-b border-white/5 p-4">
+			<div class="max-w-7xl mx-auto flex justify-between items-center">
+				<a href="/" class="text-xl font-black italic tracking-tighter">PHU <span class="text-[#FF8C00]">ALBERTO</span></a>
+				<div class="flex gap-6 text-[10px] font-bold uppercase tracking-widest">
+					<a href="/" class="hover:text-[#FF8C00] transition-colors">Start</a>
+					<a href="/ekogroszek" class="hover:text-[#FF8C00] transition-colors">Ekogroszek</a>
+					<a href="/kontakt" class="hover:text-[#FF8C00] transition-colors">Kontakt</a>
+				</div>
+			</div>
+		</nav>
+
 		<slot />
+
+		<style is:global>
+			@import 'aos/dist/aos.css';
+			:root { --accent: #FF8C00; }
+			body { font-family: 'Inter', sans-serif; }
+			.font-heavy { font-family: 'Archivo Black', sans-serif; text-transform: uppercase; font-style: italic; }
+			html { scroll-behavior: smooth; }
+			::-webkit-scrollbar { width: 8px; }
+			::-webkit-scrollbar-track { background: #050505; }
+			::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+			::-webkit-scrollbar-thumb:hover { background: #FF8C00; }
+		</style>
 	</body>
 </html>
-
-<style is:global>
-	@import 'aos/dist/aos.css';
-	:root { --accent: #FF8C00; }
-	body { font-family: 'Inter', sans-serif; }
-	/* Efekt płynnego przewijania */
-	html { scroll-behavior: smooth; }
-	/* Customowy scrollbar */
-	::-webkit-scrollbar { width: 8px; }
-	::-webkit-scrollbar-track { background: #050505; }
-	::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-	::-webkit-scrollbar-thumb:hover { background: #FF8C00; }
-</style>
