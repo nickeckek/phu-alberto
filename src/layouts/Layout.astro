@@ -11,20 +11,19 @@ import '../styles/global.css';
 		<title>{title} | PHU ALBERTO</title>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Archivo+Black&display=swap" rel="stylesheet">
 	</head>
-	<body class="bg-[#050505] text-white selection:bg-[#FF8C00] selection:text-black antialiased">
-		
-		<div class="bg-[#FF8C00] text-black py-2 overflow-hidden whitespace-nowrap z-[60] relative">
-			<div class="animate-marquee inline-block font-black uppercase text-xs tracking-tighter">
-				🔥🔥 NAJLEPSZE CENY W OKOLICY! ZAPRASZAMY DO KONTAKTU: 725 937 718 • NAJLEPSZE CENY W OKOLICY! • ZAPRASZAMY 🔥🔥
+	<body>
+		<div class="bg-[#FF8C00] text-white py-2 overflow-hidden whitespace-nowrap relative z-[60]">
+			<div class="animate-marquee inline-block font-black uppercase text-[10px] tracking-widest">
+				🔥 NAJLEPSZE CENY W OKOLICY! ZAPRASZAMY: 725 937 718 • NAJLEPSZE CENY W OKOLICY! • ZAPRASZAMY 🔥
 			</div>
 		</div>
 
-		<nav class="sticky top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/5 p-5">
+		<nav class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-black/5 p-5">
 			<div class="max-w-7xl mx-auto flex justify-between items-center">
-				<a href="/" class="font-['Archivo_Black'] text-2xl italic tracking-tighter hover:scale-105 transition-transform">
+				<a href="/" class="font-heavy text-2xl tracking-tighter hover:scale-105 transition-transform text-black">
 					PHU <span class="text-[#FF8C00]">ALBERTO</span>
 				</a>
-				<div class="flex gap-8 text-[10px] font-black uppercase tracking-widest">
+				<div class="flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-black/60">
 					<a href="/#o-nas" class="hover:text-[#FF8C00] transition-colors">O nas</a>
 					<a href="/#oferta" class="hover:text-[#FF8C00] transition-colors">Oferta</a>
 					<a href="#kontakt" class="hover:text-[#FF8C00] transition-colors">Kontakt</a>
@@ -34,24 +33,20 @@ import '../styles/global.css';
 
 		<slot />
 
-		<footer id="kontakt" class="mt-20 border-t border-white/5 bg-white/[0.01] pt-20 pb-10">
-			<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-12">
+		<footer id="kontakt" class="mt-20 border-t border-black/5 bg-gray-50 pt-20 pb-10">
+			<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-12 text-black">
 				<div>
-					<h3 class="font-['Archivo_Black'] text-xl italic mb-6">KONTAKT</h3>
-					<div class="space-y-4 text-gray-400 text-sm">
+					<h3 class="font-heavy text-xl mb-6 italic">KONTAKT</h3>
+					<div class="space-y-4 text-sm font-medium text-gray-600">
 						<p>📍 Łaziska 62, 43-170 Łaziska</p>
-						<p>📞 Tel: <a href="tel:725937718" class="text-[#FF8C00] font-bold">725 937 718</a></p>
+						<p>📞 Tel: <a href="tel:725937718" class="text-[#FF8C00] font-black underline">725 937 718</a></p>
 						<p>🕒 Pn-Pt: 7:00 - 16:00</p>
 					</div>
-					<div class="flex gap-4 mt-8 text-[9px] font-bold uppercase opacity-30">
-						<a href="/#o-nas">O nas</a> • <a href="/#oferta">Oferta</a> • <a href="/admin">Panel</a>
-					</div>
 				</div>
-				<div class="md:col-span-2 h-64 rounded-[2.5rem] overflow-hidden grayscale invert opacity-20 hover:opacity-100 hover:grayscale-0 transition-all border border-white/5">
-					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2558.123!2d18.845!3d50.145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDA4JzQyLjAiTiAxOMKwNTAnNDIuMCJF!5e0!3m2!1spl!2spl!4v1650000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+				<div class="md:col-span-2 h-72 rounded-[2.5rem] overflow-hidden border border-black/5 shadow-inner">
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2559.638531181282!2d18.8465!3d50.1385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDA4JzE4LjYiTiAxOMKwNTAnNDcuNCJF!5e0!3m2!1spl!2spl!4v1630000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 				</div>
 			</div>
-			<p class="text-center text-[9px] text-gray-600 uppercase tracking-[0.5em] mt-20 italic">© 2026 PHU ALBERTO • Albert Szymkiewicz</p>
 		</footer>
 	</body>
 </html>

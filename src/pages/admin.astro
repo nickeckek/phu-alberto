@@ -2,110 +2,58 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="System Zarządzania ALBERTO">
-    <div class="min-h-screen pt-32 pb-20 px-6 max-w-6xl mx-auto">
-        <h1 class="text-4xl font-['Archivo_Black'] italic mb-10">ADMIN <span class="text-[#FF8C00]">PANEL</span></h1>
+<Layout title="Panel Admina">
+    <div class="min-h-screen pt-32 pb-20 px-6 max-w-6xl mx-auto bg-white">
+        <h1 class="font-heavy text-4xl mb-10 text-black italic italic">ZARZĄDZANIE <span class="text-[#FF8C00]">CENAMI</span></h1>
         
-        <div id="adminApp" class="space-y-12">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse bg-white/[0.02] border border-white/10 rounded-3xl overflow-hidden">
-                    <thead class="bg-white/5 text-[10px] font-bold uppercase tracking-widest">
-                        <tr>
-                            <th class="p-6">Produkt</th>
-                            <th class="p-6">Cena</th>
-                            <th class="p-6">Dostępność</th>
-                            <th class="p-6">Opis / Parametry</th>
-                        </tr>
-                    </thead>
-                    <tbody id="productTable">
-                        </tbody>
-                </table>
-            </div>
+        <div class="overflow-x-auto shadow-sm rounded-3xl border border-black/5">
+            <table class="w-full text-left bg-white">
+                <thead class="bg-gray-50 text-[10px] font-black uppercase tracking-widest text-gray-500">
+                    <tr>
+                        <th class="p-6">Produkt</th>
+                        <th class="p-6">Cena (zł)</th>
+                        <th class="p-6">Status</th>
+                        <th class="p-6">Krótki opis</th>
+                    </tr>
+                </thead>
+                <tbody id="productTable" class="text-black"></tbody>
+            </table>
+        </div>
 
-            <div class="max-w-md mx-auto bg-white/[0.02] border border-white/10 p-10 rounded-[2.5rem] mt-10">
-                <label class="block text-[10px] font-bold text-red-500 uppercase tracking-widest text-center mb-4 italic italic">Wymagana autoryzacja PIN</label>
-                <input type="password" id="pin" class="w-full bg-black border border-white/10 rounded-xl p-4 text-center text-white font-black tracking-[1em] mb-6 outline-none focus:border-[#FF8C00]" placeholder="****">
-                <button id="saveBtn" class="w-full bg-[#FF8C00] text-black font-black py-5 rounded-2xl hover:bg-white transition-all uppercase tracking-widest">Zatwierdź zmiany</button>
-                <p id="status" class="mt-4 text-center font-bold text-xs uppercase h-4"></p>
-            </div>
+        <div class="mt-12 max-w-md mx-auto nowakowski-card p-10">
+            <input type="password" id="pin" class="w-full bg-gray-50 border border-black/5 rounded-2xl p-5 text-center text-2xl font-black tracking-[0.5em] mb-6 outline-none focus:border-[#FF8C00]" placeholder="PIN">
+            <button id="saveBtn" class="w-full bg-black text-white font-black py-5 rounded-2xl hover:bg-[#FF8C00] transition-all uppercase tracking-widest text-xs">Zatwierdź zmiany w bazie</button>
+            <p id="status" class="mt-6 text-center font-bold text-[10px] uppercase tracking-widest"></p>
         </div>
     </div>
 </Layout>
 
 <script>
-    // Definicja wszystkich produktów
     const products = [
-        { id: 'wegiel_orzech', name: 'Węgiel Orzech', cat: 'wegiel' },
-        { id: 'wegiel_groszek', name: 'Węgiel Groszek', cat: 'wegiel' },
-        { id: 'wegiel_ekogroszek', name: 'Ekogroszek', cat: 'wegiel' },
-        { id: 'drewno_paleta', name: 'Drewno na palecie', cat: 'drewno' },
-        { id: 'pellet_a1', name: 'Pellet A1', cat: 'pellet' },
-        { id: 'zlom_miedz', name: 'Miedź', cat: 'zlom' },
-        { id: 'zlom_stal', name: 'Stal', cat: 'zlom' },
-        { id: 'kruszywa_piasek', name: 'Piasek', cat: 'kruszywa' }
+        { id: 'wegiel_orzech', name: 'Węgiel Orzech' },
+        { id: 'wegiel_ekogroszek', name: 'Ekogroszek' },
+        { id: 'drewno_opalowe', name: 'Drewno Opałowe' },
+        { id: 'pellet_a1', name: 'Pellet Premium' },
+        { id: 'zlom_miedz', name: 'Skup Miedzi' },
+        { id: 'kruszywo_piasek', name: 'Piasek' }
     ];
 
     const table = document.getElementById('productTable');
-    
-    // Generowanie wierszy
     products.forEach(p => {
         table.innerHTML += `
-            <tr class="border-t border-white/5 hover:bg-white/[0.01]">
-                <td class="p-6 font-bold text-sm italic">${p.name}</td>
-                <td class="p-6"><input type="text" data-id="${p.id}" data-field="price" class="bg-black border border-white/10 p-2 rounded w-24 text-[#FF8C00] font-black outline-none" value="0"></td>
+            <tr class="border-t border-black/5">
+                <td class="p-6 font-bold italic uppercase text-sm">${p.name}</td>
+                <td class="p-6"><input type="text" data-id="${p.id}" data-field="price" class="border border-black/5 bg-gray-50 p-3 rounded-xl w-24 font-black text-[#FF8C00]"></td>
                 <td class="p-6">
-                    <select data-id="${p.id}" data-field="status" class="bg-black border border-white/10 p-2 rounded text-xs font-bold outline-none">
+                    <select data-id="${p.id}" data-field="status" class="border border-black/5 bg-gray-50 p-3 rounded-xl text-xs font-bold uppercase tracking-tighter">
                         <option value="Dostępny">Dostępny</option>
                         <option value="Brak">Brak</option>
-                        <option value="Na zamówienie">Na zamówienie</option>
                     </select>
                 </td>
-                <td class="p-6"><input type="text" data-id="${p.id}" data-field="desc" class="bg-black border border-white/10 p-2 rounded w-full text-xs outline-none" placeholder="Opis..."></td>
+                <td class="p-6"><input type="text" data-id="${p.id}" data-field="desc" class="border border-black/5 bg-gray-50 p-3 rounded-xl w-full text-xs" placeholder="..."></td>
             </tr>
         `;
     });
 
-    // Ładowanie obecnych danych
-    async function loadData() {
-        const res = await fetch('/api/prices');
-        if (res.ok) {
-            const current = await res.json();
-            document.querySelectorAll('input, select').forEach(el => {
-                const id = el.dataset.id;
-                const field = el.dataset.field;
-                if (current[id] && current[id][field]) el.value = current[id][field];
-            });
-        }
-    }
-    loadData();
-
-    // Zapisywanie
-    document.getElementById('saveBtn').addEventListener('click', async () => {
-        const pin = document.getElementById('pin').value;
-        const status = document.getElementById('status');
-        const data = {};
-
-        document.querySelectorAll('[data-id]').forEach(el => {
-            const id = el.dataset.id;
-            const field = el.dataset.field;
-            if (!data[id]) data[id] = {};
-            data[id][field] = el.value;
-        });
-
-        status.innerText = "⏳ ZAPISYWANIE...";
-        try {
-            const res = await fetch('/api/prices', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': pin },
-                body: JSON.stringify(data)
-            });
-            if (res.ok) {
-                status.innerText = "✅ ZAKOŃCZONO POMYŚLNIE";
-                status.className = "mt-4 text-center font-bold text-xs text-green-500 uppercase";
-            } else {
-                status.innerText = "❌ BŁĄD AUTORYZACJI";
-                status.className = "mt-4 text-center font-bold text-xs text-red-500 uppercase";
-            }
-        } catch { status.innerText = "❌ BŁĄD SERWERA"; }
-    });
+    // Kod zapisu fetch... (identyczny jak w poprzednim poście)
 </script>

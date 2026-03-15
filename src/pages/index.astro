@@ -2,40 +2,40 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="PHU ALBERTO | Skład Opału, Recykling, Kruszywa">
+<Layout title="PHU ALBERTO | Skład Opału & Kruszywa">
 	<main class="max-w-7xl mx-auto px-6">
-		<header class="py-32 md:py-48 text-center">
-			<h1 class="text-6xl md:text-9xl font-['Archivo_Black'] italic leading-[0.8] tracking-tighter" data-aos="fade-up">
-				ENERGIA<br/><span class="text-[#FF8C00]">I RECYKLING.</span>
+		<header class="py-32 text-center">
+			<h1 class="text-6xl md:text-9xl font-heavy leading-[0.8] tracking-tighter text-black">
+				JAKOŚĆ<br/><span class="text-[#FF8C00]">BEZ KOMPROMISU.</span>
 			</h1>
 		</header>
 
-		<section id="o-nas" class="py-24 border-y border-white/5">
+		<section id="o-nas" class="py-24 border-y border-black/5">
 			<div class="max-w-4xl">
-				<h2 class="text-[#FF8C00] font-bold text-[10px] uppercase tracking-[0.4em] mb-8 italic">Rodzinna tradycja</h2>
-				<p class="text-3xl md:text-5xl font-bold leading-[1.1] tracking-tighter italic">
-					Od lat dostarczamy ciepło do Państwa domów. Specjalizujemy się w sprzedaży węgla, pelletu oraz drewna kominkowego. Prowadzimy również profesjonalny skup złomu i sprzedaż kruszyw budowlanych z własnym transportem HDS.
+				<h2 class="text-[#FF8C00] font-bold text-[10px] uppercase tracking-[0.4em] mb-8 italic">PHU Alberto Szymkiewicz</h2>
+				<p class="text-3xl md:text-5xl font-bold leading-[1.1] tracking-tighter italic text-black">
+					Od lat budujemy zaufanie w Łaziskach. Dostarczamy węgiel, drewno i pellet o sprawdzonych parametrach. Prowadzimy rzetelny skup złomu i sprzedaż kruszyw z dostawą HDS.
 				</p>
 			</div>
 		</section>
 
 		<section id="oferta" class="py-32">
-			<h2 class="font-['Archivo_Black'] text-4xl italic mb-16 uppercase tracking-tighter">Kategorie produktów</h2>
+			<h2 class="font-heavy text-4xl mb-16 text-black tracking-tighter uppercase italic">Wybierz kategorię</h2>
 			<div class="grid gap-4">
 				{[
 					{id: 'wegiel', name: 'Węgiel', desc: 'Orzech, Groszek, Ekogroszek'},
-					{id: 'drewno', name: 'Drewno', desc: 'Drewno kominkowe i opałowe na paletach'},
-					{id: 'pellet', name: 'Pellet', desc: 'Pellet drzewny klasy A1'},
-					{id: 'kruszywa', name: 'Kruszywa', desc: 'Piasek, żwir, kamienie ozdobne'},
-					{id: 'zlom', name: 'Skup Złomu', desc: 'Miedź, aluminium, stal, mosiądz'}
+					{id: 'drewno', name: 'Drewno', desc: 'Opałowe i kominkowe'},
+					{id: 'pellet', name: 'Pellet', desc: 'Certyfikowany Pellet A1'},
+					{id: 'kruszywa', name: 'Kruszywa', desc: 'Piasek, żwir, kamień ozdobny'},
+					{id: 'zlom', name: 'Skup Złomu', desc: 'Miedź, aluminium, stal'}
 				].map((item) => (
-					<a href={`/${item.id}`} class="group relative block bg-white/[0.02] border border-white/10 p-10 rounded-[2.5rem] transition-all hover:bg-[#FF8C00] hover:border-[#FF8C00]">
-						<div class="flex justify-between items-center relative z-10">
-							<div>
-								<h3 class="text-4xl font-['Archivo_Black'] italic uppercase group-hover:text-black transition-colors">{item.name}</h3>
-								<p class="text-gray-500 text-xs mt-2 font-bold uppercase tracking-widest group-hover:text-black/60 transition-colors">{item.desc}</p>
-							</div>
-							<span class="text-2xl group-hover:text-black transition-colors">→</span>
+					<a href={`/${item.id}`} class="nowakowski-card group p-10 flex justify-between items-center">
+						<div>
+							<h3 class="text-4xl font-heavy italic text-black transition-colors">{item.name}</h3>
+							<p class="text-gray-400 text-[10px] font-bold uppercase tracking-widest mt-2 group-hover:text-[#FF8C00] transition-colors">{item.desc}</p>
+						</div>
+						<div class="w-12 h-12 rounded-full border border-black/5 flex items-center justify-center group-hover:bg-[#FF8C00] group-hover:text-white transition-all">
+							→
 						</div>
 					</a>
 				))}
