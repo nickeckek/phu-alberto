@@ -55,5 +55,32 @@ import Layout from '../layouts/Layout.astro';
         `;
     });
 
-    // Kod zapisu fetch... (identyczny jak w poprzednim poście)
+document.getElementById('saveBtn').addEventListener('click', async () => {
+        const pin = document.getElementById('pin').value;
+        const status = document.getElementById('status');
+        const data = {};
+
+        document.querySelectorAll('[data-id]').forEach(el => {
+            const id = el.dataset.id;
+            const field = el.dataset.field;
+            if (!data[id]) data[id] = {};
+            data[id][field] = el.value;
+        });
+
+        status.innerText = "⏳ ZAPISYWANIE...";
+        try {
+            const res = await fetch('/api/prices', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': pin },
+                body: JSON.stringify(data)
+            });
+            if (res.ok) {
+                status.innerText = "✅ ZAKOŃCZONO POMYŚLNIE";
+                status.className = "mt-4 text-center font-bold text-xs text-green-500 uppercase";
+            } else {
+                status.innerText = "❌ BŁĄD AUTORYZACJI";
+                status.className = "mt-4 text-center font-bold text-xs text-red-500 uppercase";
+            }
+        } catch { status.innerText = "❌ BŁĄD SERWERA"; }
+    });
 </script>
