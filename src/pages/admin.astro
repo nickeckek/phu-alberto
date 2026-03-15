@@ -1,70 +1,111 @@
 ---
 import Layout from '../layouts/Layout.astro';
 ---
-<Layout title="Admin | ALBERTO">
-    <div class="min-h-screen bg-[#050505] flex items-center justify-center p-4">
-        <div class="w-full max-w-md bg-white/[0.02] border border-white/10 p-10 rounded-[2.5rem] backdrop-blur-3xl shadow-2xl">
-            <h1 class="text-3xl font-black text-white italic mb-10 text-center tracking-tighter">SYSTEM <span class="text-[#FF8C00]">ALBERTO</span></h1>
-            
-            <form id="priceForm" class="space-y-6">
-                <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Cena Węgla (zł/t)</label>
-                    <input type="number" name="wegiel" class="w-full bg-black border border-white/10 rounded-xl p-4 text-[#FFD700] text-2xl font-black outline-none focus:border-[#FF8C00] transition-all" required>
-                </div>
-                <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Cena Pelletu (zł/t)</label>
-                    <input type="number" name="pellet" class="w-full bg-black border border-white/10 rounded-xl p-4 text-white text-2xl font-black outline-none focus:border-[#FF8C00] transition-all" required>
-                </div>
-                <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Cena Złomu (zł/kg)</label>
-                    <input type="number" step="0.01" name="zlom" class="w-full bg-black border border-white/10 rounded-xl p-4 text-white text-2xl font-black outline-none focus:border-[#FF8C00] transition-all" required>
-                </div>
-                <div class="pt-6 border-t border-white/10 mt-10">
-                    <label class="block text-[10px] font-bold text-red-500 uppercase tracking-widest text-center mb-2 italic">Podaj PIN aby autoryzować</label>
-                    <input type="password" id="pin" class="w-full bg-black border border-white/10 rounded-xl p-4 text-center text-white font-black tracking-[1em]" required>
-                </div>
-                <button type="submit" class="w-full bg-[#FF8C00] text-black font-black py-5 rounded-2xl hover:bg-white transition-all transform active:scale-95 uppercase tracking-widest">Aktualizuj Ceny</button>
-            </form>
-            <div id="status" class="mt-6 text-center font-bold text-sm uppercase tracking-widest h-6"></div>
+
+<Layout title="System Zarządzania ALBERTO">
+    <div class="min-h-screen pt-32 pb-20 px-6 max-w-6xl mx-auto">
+        <h1 class="text-4xl font-['Archivo_Black'] italic mb-10">ADMIN <span class="text-[#FF8C00]">PANEL</span></h1>
+        
+        <div id="adminApp" class="space-y-12">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse bg-white/[0.02] border border-white/10 rounded-3xl overflow-hidden">
+                    <thead class="bg-white/5 text-[10px] font-bold uppercase tracking-widest">
+                        <tr>
+                            <th class="p-6">Produkt</th>
+                            <th class="p-6">Cena</th>
+                            <th class="p-6">Dostępność</th>
+                            <th class="p-6">Opis / Parametry</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTable">
+                        </tbody>
+                </table>
+            </div>
+
+            <div class="max-w-md mx-auto bg-white/[0.02] border border-white/10 p-10 rounded-[2.5rem] mt-10">
+                <label class="block text-[10px] font-bold text-red-500 uppercase tracking-widest text-center mb-4 italic italic">Wymagana autoryzacja PIN</label>
+                <input type="password" id="pin" class="w-full bg-black border border-white/10 rounded-xl p-4 text-center text-white font-black tracking-[1em] mb-6 outline-none focus:border-[#FF8C00]" placeholder="****">
+                <button id="saveBtn" class="w-full bg-[#FF8C00] text-black font-black py-5 rounded-2xl hover:bg-white transition-all uppercase tracking-widest">Zatwierdź zmiany</button>
+                <p id="status" class="mt-4 text-center font-bold text-xs uppercase h-4"></p>
+            </div>
         </div>
     </div>
 </Layout>
 
 <script>
-    const form = document.getElementById('priceForm');
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const status = document.getElementById('status');
-        const formData = new FormData(e.target);
+    // Definicja wszystkich produktów
+    const products = [
+        { id: 'wegiel_orzech', name: 'Węgiel Orzech', cat: 'wegiel' },
+        { id: 'wegiel_groszek', name: 'Węgiel Groszek', cat: 'wegiel' },
+        { id: 'wegiel_ekogroszek', name: 'Ekogroszek', cat: 'wegiel' },
+        { id: 'drewno_paleta', name: 'Drewno na palecie', cat: 'drewno' },
+        { id: 'pellet_a1', name: 'Pellet A1', cat: 'pellet' },
+        { id: 'zlom_miedz', name: 'Miedź', cat: 'zlom' },
+        { id: 'zlom_stal', name: 'Stal', cat: 'zlom' },
+        { id: 'kruszywa_piasek', name: 'Piasek', cat: 'kruszywa' }
+    ];
+
+    const table = document.getElementById('productTable');
+    
+    // Generowanie wierszy
+    products.forEach(p => {
+        table.innerHTML += `
+            <tr class="border-t border-white/5 hover:bg-white/[0.01]">
+                <td class="p-6 font-bold text-sm italic">${p.name}</td>
+                <td class="p-6"><input type="text" data-id="${p.id}" data-field="price" class="bg-black border border-white/10 p-2 rounded w-24 text-[#FF8C00] font-black outline-none" value="0"></td>
+                <td class="p-6">
+                    <select data-id="${p.id}" data-field="status" class="bg-black border border-white/10 p-2 rounded text-xs font-bold outline-none">
+                        <option value="Dostępny">Dostępny</option>
+                        <option value="Brak">Brak</option>
+                        <option value="Na zamówienie">Na zamówienie</option>
+                    </select>
+                </td>
+                <td class="p-6"><input type="text" data-id="${p.id}" data-field="desc" class="bg-black border border-white/10 p-2 rounded w-full text-xs outline-none" placeholder="Opis..."></td>
+            </tr>
+        `;
+    });
+
+    // Ładowanie obecnych danych
+    async function loadData() {
+        const res = await fetch('/api/prices');
+        if (res.ok) {
+            const current = await res.json();
+            document.querySelectorAll('input, select').forEach(el => {
+                const id = el.dataset.id;
+                const field = el.dataset.field;
+                if (current[id] && current[id][field]) el.value = current[id][field];
+            });
+        }
+    }
+    loadData();
+
+    // Zapisywanie
+    document.getElementById('saveBtn').addEventListener('click', async () => {
         const pin = document.getElementById('pin').value;
+        const status = document.getElementById('status');
+        const data = {};
 
-        const data = {
-            wegiel: formData.get('wegiel'),
-            pellet: formData.get('pellet'),
-            zlom: formData.get('zlom')
-        };
+        document.querySelectorAll('[data-id]').forEach(el => {
+            const id = el.dataset.id;
+            const field = el.dataset.field;
+            if (!data[id]) data[id] = {};
+            data[id][field] = el.value;
+        });
 
-        status.innerText = "⏳ PRZETWARZANIE...";
-        status.className = "mt-6 text-center font-bold text-sm text-blue-500";
-
+        status.innerText = "⏳ ZAPISYWANIE...";
         try {
             const res = await fetch('/api/prices', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': pin },
                 body: JSON.stringify(data)
             });
-
             if (res.ok) {
-                status.innerText = "✅ CENY ZMIENIONE!";
-                status.className = "mt-6 text-center font-bold text-sm text-green-500 uppercase tracking-widest";
-                form.reset();
+                status.innerText = "✅ ZAKOŃCZONO POMYŚLNIE";
+                status.className = "mt-4 text-center font-bold text-xs text-green-500 uppercase";
             } else {
                 status.innerText = "❌ BŁĄD AUTORYZACJI";
-                status.className = "mt-6 text-center font-bold text-sm text-red-500 uppercase tracking-widest";
+                status.className = "mt-4 text-center font-bold text-xs text-red-500 uppercase";
             }
-        } catch (err) {
-            status.innerText = "❌ BŁĄD POŁĄCZENIA";
-            status.className = "mt-6 text-center font-bold text-sm text-red-500 uppercase tracking-widest";
-        }
+        } catch { status.innerText = "❌ BŁĄD SERWERA"; }
     });
 </script>

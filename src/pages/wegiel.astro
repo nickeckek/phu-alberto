@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+const runtime = Astro.locals.runtime;
+let db = {};
+try {
+    const data = await runtime?.env?.PRICES_KV.get('current_prices');
+    if (data) db = JSON.parse(data);
+} catch (e) {}
+---
+
+<Layout title="Węgiel | PHU ALBERTO">
+    <main class="max-w-7xl mx-auto px-6 pt-32 pb-20">
+        <div class="flex justify-between items-end mb-16 border-b border-white/5 pb-10">
+            <h1 class="text-7xl font-['Archivo_Black'] italic uppercase tracking-tighter">WĘGIEL</h1>
+            <a href="/admin" class="text-[9px] font-black uppercase tracking-[0.3em] border border-white/20 px-6 py-3 rounded-full hover:bg-white hover:text-black transition-all">Zmień ceny</a>
+        </div>
+
+        <div class="grid gap-6">
+            {['wegiel_orzech', 'wegiel_groszek', 'wegiel_ekogroszek'].map(id => {
+                const item = db[id] || { price: '0', status: 'Ładowanie...', desc: 'Brak opisu' };
+                const labels = { wegiel_orzech: 'Orzech', wegiel_groszek: 'Groszek', wegiel_ekogroszek: 'Ekogroszek' };
+                return (
+                    <div class="bg-white/[0.02] border border-white/10 p-12 rounded-[3rem] flex flex-col md:flex-row justify-between items-center group hover:border-[#FF8C00]">
+                        <div class="text-center md:text-left mb-8 md:mb-0">
+                            <h2 class="text-4xl font-['Archivo_Black'] italic uppercase mb-2">{labels[id]}</h2>
+                            <p class="text-gray-500 text-sm font-bold uppercase tracking-widest italic">{item.desc}</p>
+                            <span class={`inline-block mt-4 px-4 py-1 rounded-full text-[9px] font-black uppercase ${item.status === 'Dostępny' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                                {item.status}
+                            </span>
+                        </div>
+                        <div class="text-6xl font-['Archivo_Black'] italic text-[#FF8C00]">
+                            {item.price}<span class="text-xl text-gray-500 ml-2 tracking-normal uppercase">zł/t</span>
+                        </div>
+                    </div>
+                );
+            })}
+        </div>
+    </main>
+</Layout>

@@ -1,59 +1,45 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-const runtime = Astro.locals.runtime;
-let prices = { wegiel: "0", pellet: "0", zlom: "0" };
-try {
-  if (runtime?.env?.PRICES_KV) {
-    const data = await runtime.env.PRICES_KV.get('current_prices');
-    if (data) prices = JSON.parse(data);
-  }
-} catch (e) {
-  console.error("Błąd bazy KV:", e);
-}
 ---
 
-<Layout title="PHU ALBERTO | Skład Opału & Recykling">
-	<main class="relative pt-24 p-4 md:p-10 max-w-7xl mx-auto overflow-hidden">
-		
-		<header class="text-center py-16 md:py-24" data-aos="zoom-out">
-			<h1 class="text-6xl md:text-8xl font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-gray-500">
-				PHU <span class="text-[#FF8C00]">ALBERTO</span>
+<Layout title="PHU ALBERTO | Skład Opału, Recykling, Kruszywa">
+	<main class="max-w-7xl mx-auto px-6">
+		<header class="py-32 md:py-48 text-center">
+			<h1 class="text-6xl md:text-9xl font-['Archivo_Black'] italic leading-[0.8] tracking-tighter" data-aos="fade-up">
+				ENERGIA<br/><span class="text-[#FF8C00]">I RECYKLING.</span>
 			</h1>
-			<p class="mt-4 text-gray-400 uppercase tracking-[0.6em] text-xs font-bold">Energia • Recykling • Kruszywa</p>
 		</header>
 
-		<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-			
-			<div class="md:col-span-2 bg-white/[0.03] border border-white/10 p-10 rounded-[3rem] backdrop-blur-3xl group" data-aos="fade-right">
-				<div class="flex justify-between">
-					<h2 class="text-[#FF8C00] text-3xl font-black italic uppercase tracking-tight text-glow">Skład Opału</h2>
-					<div class="text-5xl group-hover:scale-110 transition-transform">🔥</div>
-				</div>
-				<div class="mt-20">
-					<div class="text-7xl md:text-8xl font-black text-[#FFD700] tracking-tighter">
-						{prices.wegiel}<span class="text-2xl text-gray-500 ml-2 italic uppercase">zł/t</span>
-					</div>
-				</div>
-				<a href="/ekogroszek" class="mt-10 block text-center border border-white/10 hover:border-[#FF8C00] font-extrabold py-5 rounded-2xl transition-all uppercase tracking-widest text-[10px]">
-					Sprawdź parametry i dostawę →
-				</a>
+		<section id="o-nas" class="py-24 border-y border-white/5">
+			<div class="max-w-4xl">
+				<h2 class="text-[#FF8C00] font-bold text-[10px] uppercase tracking-[0.4em] mb-8 italic">Rodzinna tradycja</h2>
+				<p class="text-3xl md:text-5xl font-bold leading-[1.1] tracking-tighter italic">
+					Od lat dostarczamy ciepło do Państwa domów. Specjalizujemy się w sprzedaży węgla, pelletu oraz drewna kominkowego. Prowadzimy również profesjonalny skup złomu i sprzedaż kruszyw budowlanych z własnym transportem HDS.
+				</p>
 			</div>
+		</section>
 
-			<div class="bg-white/[0.03] border border-white/10 p-10 rounded-[3rem] flex flex-col justify-between group" data-aos="fade-left">
-				<h3 class="text-xl font-black text-gray-300 uppercase italic">Pellet A1</h3>
-				<div class="my-10">
-					<div class="text-5xl font-black text-white">{prices.pellet} zł</div>
-					<div class="text-[#FF8C00] font-bold text-xs mt-2 uppercase">Worek 15kg</div>
-				</div>
-				<div class="text-7xl self-end opacity-20">🌲</div>
+		<section id="oferta" class="py-32">
+			<h2 class="font-['Archivo_Black'] text-4xl italic mb-16 uppercase tracking-tighter">Kategorie produktów</h2>
+			<div class="grid gap-4">
+				{[
+					{id: 'wegiel', name: 'Węgiel', desc: 'Orzech, Groszek, Ekogroszek'},
+					{id: 'drewno', name: 'Drewno', desc: 'Drewno kominkowe i opałowe na paletach'},
+					{id: 'pellet', name: 'Pellet', desc: 'Pellet drzewny klasy A1'},
+					{id: 'kruszywa', name: 'Kruszywa', desc: 'Piasek, żwir, kamienie ozdobne'},
+					{id: 'zlom', name: 'Skup Złomu', desc: 'Miedź, aluminium, stal, mosiądz'}
+				].map((item) => (
+					<a href={`/${item.id}`} class="group relative block bg-white/[0.02] border border-white/10 p-10 rounded-[2.5rem] transition-all hover:bg-[#FF8C00] hover:border-[#FF8C00]">
+						<div class="flex justify-between items-center relative z-10">
+							<div>
+								<h3 class="text-4xl font-['Archivo_Black'] italic uppercase group-hover:text-black transition-colors">{item.name}</h3>
+								<p class="text-gray-500 text-xs mt-2 font-bold uppercase tracking-widest group-hover:text-black/60 transition-colors">{item.desc}</p>
+							</div>
+							<span class="text-2xl group-hover:text-black transition-colors">→</span>
+						</div>
+					</a>
+				))}
 			</div>
-
-		</div>
+		</section>
 	</main>
 </Layout>
-
-<script>
-	import AOS from 'aos';
-	AOS.init({ duration: 1000, once: true });
-</script>
