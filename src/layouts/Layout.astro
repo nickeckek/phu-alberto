@@ -6,52 +6,74 @@ import '../styles/global.css';
 <!doctype html>
 <html lang="pl" class="scroll-smooth">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>{title} | PHU ALBERTO</title>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Archivo+Black&display=swap" rel="stylesheet">
+  		<meta charset="UTF-8" />
+  		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  		<title>{title} | PHU ALBERTO Łaziska</title>
+  		<meta name="description" content="Skład opału w Łaziskach. Najniższe ceny węgla, pelletu i drewna. Prowadzimy rzetelny skup złomu. Sprawdź aktualny cennik!">
+  		<meta name="robots" content="index, follow, max-image-preview:large">
+		<meta name="author" content="PHU ALBERTO">
+		<meta name="designer" content="nickeckek">
+  		<link rel="canonical" href="https://phualberto.pl/">
+  		<meta property="og:type" content="website">
+ 	 	<meta property="og:title" content="PHU ALBERTO - Węgiel, Pellet, Skup Złomu">
+  		<meta property="og:description" content="Najlepsze ceny opału w okolicy. Zobacz naszą ofertę i zamów transport HDS!">
+  		<meta property="og:image" content="https://phualberto.pl/og-photo.jpg">
+  		<meta property="og:locale" content="pl_PL">
+  		<meta property="og:site_name" content="PHU ALBERTO">
+		<link rel="icon" href="/favicon.ico">
+  		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+  		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	</head>
 	<body>
-		<div class="bg-[#FF8C00] text-white py-2 overflow-hidden whitespace-nowrap relative z-[60]">
-			<div class="animate-marquee inline-block font-black uppercase text-[10px] tracking-widest">
-				🔥 NAJLEPSZE CENY W OKOLICY! ZAPRASZAMY: 725 937 718 • NAJLEPSZE CENY W OKOLICY! • ZAPRASZAMY 🔥
-			</div>
-		</div>
-
 		<nav class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-black/5 p-5">
 			<div class="max-w-7xl mx-auto flex justify-between items-center">
-				<a href="/" class="font-heavy text-2xl tracking-tighter hover:scale-105 transition-transform text-black">
-					PHU <span class="text-[#FF8C00]">ALBERTO</span>
-				</a>
-				<div class="flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-black/60">
+				<a href="/" class="font-heavy text-2xl tracking-tighter hover:scale-105 transition-transform text-black">PHU <span class="text-[#FF8C00]">ALBERTO</span></a>
+				<div class="flex gap-8 text-[12px] font-black uppercase tracking-[0.2em] text-black/80">
 					<a href="/#o-nas" class="hover:text-[#FF8C00] transition-colors">O nas</a>
 					<a href="/#oferta" class="hover:text-[#FF8C00] transition-colors">Oferta</a>
 					<a href="#kontakt" class="hover:text-[#FF8C00] transition-colors">Kontakt</a>
+					<a href="/admin" class="hover:text-[#FF8C00] transition-colors">ADMIN</a>
 				</div>
 			</div>
 		</nav>
 
 		<slot />
 
-		<footer id="kontakt" class="mt-20 border-t border-black/5 bg-gray-50 pt-20 pb-10">
-			<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-12 text-black">
-				<div>
-					<h3 class="font-heavy text-xl mb-6 italic">KONTAKT</h3>
-					<div class="space-y-4 text-sm font-medium text-gray-600">
-						<p>📍 Łaziska 62, 43-170 Łaziska</p>
-						<p>📞 Tel: <a href="tel:725937718" class="text-[#FF8C00] font-black underline">725 937 718</a></p>
-						<p>🕒 Pn-Pt: 7:00 - 16:00</p>
-					</div>
-				</div>
-				<div class="md:col-span-2 h-72 rounded-[2.5rem] overflow-hidden border border-black/5 shadow-inner">
-					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2559.638531181282!2d18.8465!3d50.1385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDA4JzE4LjYiTiAxOMKwNTAnNDcuNCJF!5e0!3m2!1spl!2spl!4v1630000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-				</div>
-			</div>
-		</footer>
+		<footer id="kontakt" class="mt-24 border-t border-gray-100 bg-white pt-20 pb-10">
+    	<div class="max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-3 gap-12">
+        <div class="space-y-6">
+            <h2 class="text-3xl font-black italic tracking-tighter">PHU <span class="text-[#FF8C00]">ALBERTO</span></h2>
+        <div class="space-y-4">
+        <div class="flex items-center gap-4">
+            <span class="text-xl">📍</span>
+            <p class="font-bold italic">Łaziska 62, 24-335 Łaziska</p>
+        </div>
+        <a href="tel:725937718" class="flex items-center gap-4 group">
+            <span class="text-xl group-hover:scale-110 transition-transform">📞</span>
+            <p class="font-bold text-lg text-[#FF8C00] italic underline">725 937 718</p>
+        </a>
+        <div class="flex items-center gap-4 text-gray-500">
+            <span class="text-xl">🕒</span>
+        <div>
+            <p class="text-[10px] uppercase font-bold tracking-widest">Pn-Pt: 8:00 - 16:00</p>
+        </div>
+        </div>
+        </div>
+        </div>
+        <div class="lg:col-span-2">
+        <div class="h-80 w-full rounded-3xl overflow-hidden border border-gray-100 shadow-sm">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2503.166084107453!2d21.875528076861738!3d51.14228833730999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47229b4dbdc50271%3A0x8296ba78d44c22b7!2sPHU%20ALBERTO%20Albert%20Szymkiewicz!5e0!3m2!1spl!2spl!4v1773668855642!5m2!1spl!2spl" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        </div>
+        </div>
+        <div class="mt-16 pt-8 border-t border-gray-50 flex flex-col md:flex-row justify-between text-[12px] font-bold text-gray-300 uppercase tracking-widest text-center md:text-left gap-4">
+        	<p>© 2026 PHU ALBERTO</p>
+        	<p>NIP: 123-456-78-90</p>
+        </div>
+    	</div>
+	</footer>
 	</body>
 </html>
 
-<style is:global>
-	@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-	.animate-marquee { display: inline-block; animation: marquee 25s linear infinite; }
-</style>
